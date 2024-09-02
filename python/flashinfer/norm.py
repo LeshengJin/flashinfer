@@ -16,18 +16,22 @@ limitations under the License.
 
 import torch
 
-# mypy: disable-error-code="attr-defined"
-try:
-    from . import _kernels
-except ImportError as e:
-    import logging
-    import os
+from .jit import load_cuda_ops, FLASHINFER_CSRC_DIR
 
-    if os.environ.get("BUILD_DOC", "0") == "1":
-        _kernels = None
-        logging.warning("Kernels are not loaded in documentation build mode.")
-    else:
-        raise e
+_norm_module = None
+
+
+def get_norm_module():
+    global _norm_module
+    if _norm_module is None:
+        _norm_module = load_cuda_ops(
+            "norm",
+            [
+                FLASHINFER_CSRC_DIR / "norm.cu",
+                FLASHINFER_CSRC_DIR / "flashinfer_norm_ops.cu",
+            ],
+        )
+    return _norm_module
 
 
 def rmsnorm(
@@ -49,7 +53,7 @@ def rmsnorm(
     output: torch.Tensor
         Normalized tensor, shape (batch_size, hidden_size).
     """
-    return _kernels.rmsnorm(input, weight, eps)
+    return get_norm_module().rmsnorm(input, weight, eps)
 
 
 def fused_add_rmsnorm(
@@ -68,7 +72,7 @@ def fused_add_rmsnorm(
     eps: float
         Epsilon for numerical stability.
     """
-    _kernels.fused_add_rmsnorm(input, residual, weight, eps)
+    get_norm_module().fused_add_rmsnorm(input, residual, weight, eps)
 
 
 def gemma_rmsnorm(input: torch.Tensor, weight: torch.Tensor, eps: float = 1e-6):
@@ -88,7 +92,7 @@ def gemma_rmsnorm(input: torch.Tensor, weight: torch.Tensor, eps: float = 1e-6):
     output: torch.Tensor
         Gemma Normalized tensor, shape (batch_size, hidden_size).
     """
-    return _kernels.gemma_rmsnorm(input, weight, eps)
+    return get_norm_module().gemma_rmsnorm(input, weight, eps)
 
 
 def gemma_fused_add_rmsnorm(
@@ -107,4 +111,4 @@ def gemma_fused_add_rmsnorm(
     eps: float
         Epsilon for numerical stability.
     """
-    _kernels.gemma_fused_add_rmsnorm(input, residual, weight, eps)
+    get_norm_module().gemma_fused_add_rmsnorm(input, residual, weight, eps)
