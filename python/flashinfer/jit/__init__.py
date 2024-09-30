@@ -78,26 +78,26 @@ def load_cuda_ops(
     extra_cuda_cflags: List[str] = [
         "-O3",
         "-std=c++17",
-        "--threads",
-        "4",
+        # "--threads",
+        # "4",
         # "-Xfatbin",
         # "-compress-all",
         "-use_fast_math",
-        "-DFLASHINFER_ENABLE_BF16",
-        "-DFLASHINFER_ENABLE_FP8",
+        # "-DFLASHINFER_ENABLE_BF16",
+        # "-DFLASHINFER_ENABLE_FP8",
     ],
     extra_ldflags=None,
     extra_include_paths=None,
     verbose=False,
 ):
-    check_cuda_arch()
+    # check_cuda_arch()
     build_directory = FLASHINFER_JIT_DIR / name
     if not os.path.exists(build_directory):
         os.makedirs(build_directory)
     if extra_include_paths is None:
         extra_include_paths = [
             FLASHINFER_INCLUDE_DIR,
-            CUTLASS_INCLUDE_DIR,
+            # CUTLASS_INCLUDE_DIR,
             FLASHINFER_CSRC_DIR,
         ]
     return torch_cpp_ext.load(

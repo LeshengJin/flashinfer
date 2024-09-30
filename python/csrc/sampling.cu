@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include <flashinfer/sampling.cuh>
+#include <flashinfer/hip/sampling.hpp>
 
 #include "flashinfer_ops.h"
 #include "pytorch_extension_utils.h"

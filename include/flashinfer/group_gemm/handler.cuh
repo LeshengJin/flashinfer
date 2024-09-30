@@ -20,7 +20,7 @@
 
 #include "../allocator.h"
 #include "../utils.cuh"
-#include "group_gemm_cutlass.cuh"
+// #include "group_gemm_cutlass.cuh"
 #include "group_gemm_lora.cuh"
 #include "group_gemv.cuh"
 
