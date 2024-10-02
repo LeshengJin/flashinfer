@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 #include <flashinfer/hip/sampling.hpp>
-
+#include <torch/all.h>
+#include <ATen/cuda/CUDAContext.h>
+#include <c10/cuda/CUDAGuard.h>
+#include <hip/hip_bf16.h>
 #include "flashinfer_ops.h"
 // #include "pytorch_extension_utils.h"
 
