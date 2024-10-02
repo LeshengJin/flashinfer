@@ -15,6 +15,8 @@
  */
 #include <torch/extension.h>
 
+#include "flashinfer_ops.h"
+
 PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
   m.def("sampling_from_probs", &sampling_from_probs, "Sample from probabilities");
   m.def("top_k_sampling_from_probs", &top_k_sampling_from_probs,

@@ -15,7 +15,7 @@
  */
 #include <flashinfer/hip/sampling.hpp>
 
-// #include "flashinfer_ops.h"
+#include "flashinfer_ops.h"
 // #include "pytorch_extension_utils.h"
 
 using namespace flashinfer;
