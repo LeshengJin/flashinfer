@@ -28,8 +28,8 @@ def get_sampling_module():
         _sampling_module = load_cuda_ops(
             "sampling",
             [
-                FLASHINFER_CSRC_DIR / "sampling.cu",
-                FLASHINFER_CSRC_DIR / "flashinfer_sampling_ops.cu",
+                FLASHINFER_CSRC_DIR / "hip" / "sampling.hpp",
+                FLASHINFER_CSRC_DIR / "hip" / "flashinfer_sampling_ops.hpp",
             ],
         )
     return _sampling_module
